@@ -13,8 +13,8 @@ let waitingUser = null;
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
+  // Pairing logic (random chat)
   if (waitingUser) {
-    // Connect two users
     socket.partner = waitingUser;
     waitingUser.partner = socket;
 
@@ -27,7 +27,7 @@ io.on("connection", (socket) => {
     socket.emit("waiting", "Waiting for a stranger to join...");
   }
 
-  // ✅ Message with timestamp
+  // Text message (server adds timestamp and forwards)
   socket.on("message", (msg) => {
     if (socket.partner) {
       const data = {
@@ -38,31 +38,54 @@ io.on("connection", (socket) => {
     }
   });
 
-  // ✅ Typing indicator
+  // Typing indicator
   socket.on("typing", () => {
-    if (socket.partner) {
-      socket.partner.emit("typing");
-    }
+    if (socket.partner) socket.partner.emit("typing");
   });
-
   socket.on("stopTyping", () => {
-    if (socket.partner) {
-      socket.partner.emit("stopTyping");
-    }
+    if (socket.partner) socket.partner.emit("stopTyping");
   });
 
-  // ✅ New Chat feature
+  // New Chat: put both back into waiting queue appropriately
   socket.on("newChat", () => {
     if (socket.partner) {
+      // Tell partner that stranger left and put them back to waiting
       socket.partner.emit("message", { text: "Stranger left. Searching new...", time: "" });
       socket.partner.partner = null;
       waitingUser = socket.partner;
     }
+    // Make current socket waiting again
     socket.partner = null;
     waitingUser = socket;
     socket.emit("waiting", "Waiting for a stranger to join...");
   });
 
+  // ------- WebRTC Signaling (video chat) -------
+  socket.on("offer", (offer) => {
+    if (socket.partner) {
+      socket.partner.emit("offer", offer);
+    }
+  });
+
+  socket.on("answer", (answer) => {
+    if (socket.partner) {
+      socket.partner.emit("answer", answer);
+    }
+  });
+
+  socket.on("ice-candidate", (candidate) => {
+    if (socket.partner) {
+      socket.partner.emit("ice-candidate", candidate);
+    }
+  });
+
+  socket.on("stopVideo", () => {
+    if (socket.partner) {
+      socket.partner.emit("stopVideo");
+    }
+  });
+
+  // Disconnect handling
   socket.on("disconnect", () => {
     if (socket.partner) {
       socket.partner.emit("message", { text: "Stranger disconnected.", time: "" });
@@ -74,6 +97,7 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(3000, () => {
-  console.log("Server running at http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });

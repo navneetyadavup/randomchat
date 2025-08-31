@@ -1,25 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Random Chat</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Random Chat — Text + Video</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h2>Random Stranger Chat</h2>
-    <div id="messages" class="chat-box"></div>
-    <div id="typing" class="typing"></div>
-    <div class="input-area">
-      <input id="messageInput" type="text" placeholder="Type a message..."/>
-      <button id="sendBtn">Send</button>
-    </div>
-    <div class="controls">
-      <button id="newChatBtn">New Chat</button>
-      <button id="darkModeBtn">🌙 Dark Mode</button>
-    </div>
+  <div class="app">
+    <header class="topbar">
+      <div class="title">Random Chat</div>
+      <div class="top-actions">
+        <button id="darkModeBtn" class="small">🌙</button>
+        <button id="newChatBtn" class="small">New Chat</button>
+      </div>
+    </header>
+
+    <main class="main-area">
+      <section class="video-area">
+        <div class="video-row">
+          <div class="video-box">
+            <video id="remoteVideo" autoplay playsinline></video>
+            <div class="video-label">Stranger</div>
+          </div>
+          <div class="video-box local">
+            <video id="localVideo" autoplay playsinline muted></video>
+            <div class="video-label">You</div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button id="startVideoBtn">Start Video</button>
+          <button id="stopVideoBtn" disabled>Stop Video</button>
+        </div>
+      </section>
+
+      <section class="chat-area">
+        <div id="status" class="status">Connecting...</div>
+        <div id="messages" class="messages"></div>
+        <div id="typing" class="typing"></div>
+
+        <div class="input-row">
+          <input id="messageInput" placeholder="Type a message..." />
+          <button id="sendBtn">➤</button>
+        </div>
+      </section>
+    </main>
   </div>
+
   <script src="/socket.io/socket.io.js"></script>
   <script src="script.js"></script>
 </body>
