@@ -1,0 +1,116 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  width: 400px;
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+h2 {
+  text-align: center;
+}
+
+.chat-box {
+  height: 350px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.message {
+  background: #ececec;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 8px;
+  max-width: 75%;
+}
+
+.message.self {
+  background: #dcf8c6;
+  margin-left: auto;
+}
+
+.time {
+  font-size: 10px;
+  color: gray;
+  float: right;
+  margin-left: 5px;
+}
+
+.typing {
+  font-style: italic;
+  color: gray;
+  height: 15px;
+  margin-bottom: 5px;
+}
+
+.input-area {
+  display: flex;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px 0 0 8px;
+  border: 1px solid #ccc;
+}
+
+.input-area button {
+  padding: 8px 15px;
+  border: none;
+  background: #25d366;
+  color: white;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.controls button {
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ✅ Dark mode */
+.dark-mode {
+  background: #121212;
+  color: white;
+}
+
+.dark-mode .container {
+  background: #1e1e1e;
+  color: white;
+}
+
+.dark-mode .chat-box {
+  background: #2c2c2c;
+}
+
+.dark-mode .message {
+  background: #333;
+  color: white;
+}
+
+.dark-mode .message.self {
+  background: #056162;
+  color: white;
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Random Chat</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h2>Random Stranger Chat</h2>
+    <div id="messages" class="chat-box"></div>
+    <div id="typing" class="typing"></div>
+    <div class="input-area">
+      <input id="messageInput" type="text" placeholder="Type a message..."/>
+      <button id="sendBtn">Send</button>
+    </div>
+    <div class="controls">
+      <button id="newChatBtn">New Chat</button>
+      <button id="darkModeBtn">🌙 Dark Mode</button>
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
